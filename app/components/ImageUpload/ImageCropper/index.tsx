@@ -10,6 +10,14 @@ import ReactCrop, {
 import "react-image-crop/dist/ReactCrop.css";
 
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 import { Minus, Plus } from "lucide-react";
@@ -52,8 +60,28 @@ export function ImageCropperControls({
 }: Omit<CropperControls, "onReset">) {
   return (
     <div className="flex flex-wrap items-center gap-4">
-      {/* Aspect ratio buttons */}
-      <div className="flex gap-1" role="group" aria-label="Aspect ratio">
+      {/* Aspect ratio - Select on mobile, buttons on lg+ */}
+      <Select
+        value={aspectRatio}
+        onValueChange={onAspectChange}
+        disabled={disabled}
+      >
+        <SelectTrigger className="w-20 lg:hidden" size="sm">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="free">Free</SelectItem>
+          <SelectItem value="1:1">1:1</SelectItem>
+          <SelectItem value="4:3">4:3</SelectItem>
+          <SelectItem value="16:9">16:9</SelectItem>
+        </SelectContent>
+      </Select>
+
+      <div
+        className="hidden gap-1 lg:flex"
+        role="group"
+        aria-label="Aspect ratio"
+      >
         {(["free", "1:1", "4:3", "16:9"] as AspectRatioPreset[]).map(
           (preset) => (
             <Button
@@ -70,9 +98,28 @@ export function ImageCropperControls({
         )}
       </div>
 
-      {/* Zoom controls */}
+      {/* Zoom - Input on mobile, slider on lg+ */}
+      <div className="flex items-center gap-2 lg:hidden">
+        <span className="text-muted-foreground text-sm">Zoom</span>
+        <Input
+          type="number"
+          min={100}
+          max={400}
+          step={10}
+          value={Math.round(scale * 100)}
+          onChange={(e) => {
+            const value = Math.max(100, Math.min(400, Number(e.target.value)));
+            onSliderChange([value / 100]);
+          }}
+          disabled={disabled}
+          className="h-8 w-18"
+          aria-label="Zoom level"
+        />
+        <span className="text-muted-foreground text-sm">%</span>
+      </div>
+
       <div
-        className="flex items-center gap-2"
+        className="hidden items-center gap-2 lg:flex"
         role="group"
         aria-label="Zoom controls"
       >

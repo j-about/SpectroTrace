@@ -526,7 +526,7 @@ export function Spectrogram({
       </div>
 
       {/* Dual spectrogram grid - 50/50 split */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <SpectrogramPanel
           wavBlob={wavBlob}
           frequencyMin={20}

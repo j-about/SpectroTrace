@@ -184,22 +184,23 @@ export default function Home() {
                       onCropChange={handleCropChange}
                       className="border-border min-h-75 rounded-lg border"
                       renderControls={(controls) => (
-                        <ImageCropperControls {...controls} />
+                        <div className="flex flex-wrap items-center justify-between gap-4">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="max-lg:px-0"
+                            onClick={() => {
+                              URL.revokeObjectURL(imageData.objectUrl);
+                              setImageData(null);
+                              setCrop(null);
+                            }}
+                          >
+                            Remove image
+                          </Button>
+                          <ImageCropperControls {...controls} />
+                        </div>
                       )}
                     />
-                    <div className="flex justify-end">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => {
-                          URL.revokeObjectURL(imageData.objectUrl);
-                          setImageData(null);
-                          setCrop(null);
-                        }}
-                      >
-                        Remove image
-                      </Button>
-                    </div>
                   </div>
                 ) : (
                   <ImageUpload onImageLoaded={handleImageLoaded} />
