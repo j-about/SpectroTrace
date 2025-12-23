@@ -78,9 +78,9 @@ web_modules/
 .next
 out
 
-# Nuxt.js build / generate output
-.nuxt
-dist
+# Service Worker build output
+public/sw.js
+public/sw.js.map
 
 # Gatsby files
 .cache/
