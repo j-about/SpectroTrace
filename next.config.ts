@@ -16,15 +16,17 @@ import type { NextConfig } from "next";
 // - All processing is client-side (no server uploads)
 // - Stripe Payment Links are external navigation (not embedded)
 // - blob: and data: URIs needed for audio playback and image processing
+// - Google Tag Manager domains for analytics (when NEXT_PUBLIC_GTM_ID is set)
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline';
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://tagmanager.google.com;
   style-src 'self' 'unsafe-inline';
-  img-src 'self' data: blob:;
+  img-src 'self' data: blob: https://www.googletagmanager.com;
   media-src 'self' blob:;
   font-src 'self';
-  connect-src 'self';
+  connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com;
   worker-src 'self' blob:;
+  frame-src https://www.googletagmanager.com;
   object-src 'none';
   base-uri 'self';
   form-action 'self';

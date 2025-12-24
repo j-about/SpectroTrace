@@ -62,10 +62,11 @@ Copy `.env.example` to `.env.local` for local development:
 cp .env.example .env.local
 ```
 
-| Variable                 | Required | Default               | Description                                                        |
-| ------------------------ | -------- | --------------------- | ------------------------------------------------------------------ |
-| `NODE_ENV`               | No       | `development`         | Node environment (`development`, `production`, `test`)             |
-| `NEXT_PUBLIC_BASE_URL`   | No       | `http://localhost:3000` | Canonical base URL for SEO metadata, sitemaps, and OpenGraph tags |
+| Variable                 | Required | Default                 | Description                                                        |
+| ------------------------ | -------- | ----------------------- | ------------------------------------------------------------------ |
+| `NODE_ENV`               | No       | `development`           | Node environment (`development`, `production`, `test`)             |
+| `NEXT_PUBLIC_BASE_URL`   | No       | `http://localhost:3000` | Canonical base URL for SEO metadata, sitemaps, and OpenGraph tags  |
+| `NEXT_PUBLIC_GTM_ID`     | No       | (empty)                 | Google Tag Manager container ID (format: GTM-XXXXXXXX)             |
 
 For production deployment, set `NEXT_PUBLIC_BASE_URL` to your domain (e.g., `https://www.spectrotrace.org`).
 
@@ -156,7 +157,8 @@ app/
 │   ├── Visualizer/        # Waveform and Spectrogram
 │   ├── ExportButton/      # WAV download
 │   ├── TipPrompt/         # Optional tipping modal
-│   └── pwa/               # Service worker and install prompt
+│   ├── pwa/               # Service worker and install prompt
+│   └── analytics/         # Google Tag Manager integration
 │
 ├── lib/
 │   ├── audio/             # Audio generation and WAV encoding
@@ -233,9 +235,10 @@ The `dev` and `build` commands automatically rebuild the service worker. For man
 
 ### External Dependencies
 
-| Resource          | Domain           | Purpose                    |
-| ----------------- | ---------------- | -------------------------- |
-| Stripe (optional) | `buy.stripe.com` | Tipping (opens in new tab) |
+| Resource               | Domain                                              | Purpose                                   |
+| ---------------------- | --------------------------------------------------- | ----------------------------------------- |
+| Stripe (optional)      | `buy.stripe.com`                                    | Tipping (opens in new tab)                |
+| Google Tag Manager     | `*.googletagmanager.com`, `*.google-analytics.com`  | Analytics (optional, disabled by default) |
 
 ### Deployment Security
 

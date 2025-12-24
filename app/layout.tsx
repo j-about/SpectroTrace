@@ -14,6 +14,10 @@ import type { Metadata, Viewport } from "next";
 import { Toaster } from "@/components/ui/sonner";
 import { ServiceWorkerRegistrar } from "@/components/pwa/ServiceWorkerRegistrar";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
+import {
+  GoogleTagManagerScript,
+  GoogleTagManagerNoScript,
+} from "@/components/analytics/GoogleTagManager";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -76,7 +80,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
+      <head>
+        <GoogleTagManagerScript />
+      </head>
       <body className="bg-background text-foreground min-h-screen antialiased">
+        <GoogleTagManagerNoScript />
         {children}
         <Toaster position="bottom-right" richColors />
         <ServiceWorkerRegistrar />
