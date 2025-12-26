@@ -83,6 +83,8 @@ When `NEXT_PUBLIC_GTM_ID` is configured, additional CSP domains can be whitelist
 | `NEXT_PUBLIC_CSP_SCRIPT_SRC`  | Additional script sources (space-separated URLs)     |
 | `NEXT_PUBLIC_CSP_STYLE_SRC`   | Additional style sources (space-separated URLs)      |
 
+These variables also configure which external domains bypass service worker caching, ensuring analytics and tracking requests are never served from cache.
+
 See [Google's CSP guide](https://developers.google.com/tag-platform/security/guides/csp) for required domains per service.
 
 ## Technical Architecture
@@ -164,6 +166,9 @@ app/
 ├── manifest.ts            # PWA manifest configuration
 ├── globals.css            # Tailwind CSS theme
 │
+├── config/
+│   └── external-domains.mjs  # Shared GTM/CSP domain configuration
+│
 ├── components/
 │   ├── ui/                # shadcn/ui component library
 │   ├── layout/            # Header and Footer
@@ -228,6 +233,14 @@ The `dev` and `build` commands automatically rebuild the service worker. For man
 | ----------------------- | ----------------------------------- |
 | `npm run build:sw`      | Development build (with sourcemaps) |
 | `npm run build:sw:prod` | Production build (minified)         |
+
+#### External Domain Configuration
+
+External domains that bypass service worker caching are configured via environment variables:
+
+- When `NEXT_PUBLIC_GTM_ID` is set, GTM script and connect domains automatically bypass caching
+- Additional domains from `NEXT_PUBLIC_CSP_CONNECT_SRC` and `NEXT_PUBLIC_CSP_SCRIPT_SRC` also bypass caching
+- This shared configuration (`app/config/external-domains.mjs`) is used by both the CSP headers and service worker
 
 ## Security & Privacy
 

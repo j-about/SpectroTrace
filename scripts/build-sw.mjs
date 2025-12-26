@@ -11,14 +11,20 @@ import * as esbuild from "esbuild";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { getExternalDomains } from "../app/config/external-domains.mjs";
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, "..");
 
 async function buildServiceWorker() {
   const isProd = process.env.NODE_ENV === "production";
+  const externalDomains = getExternalDomains();
 
   console.log(
     `Building service worker (${isProd ? "production" : "development"})...`
+  );
+  console.log(
+    `External domains for SW bypass: ${externalDomains.join(", ") || "(none)"}`
   );
 
   const result = await esbuild.build({
@@ -34,6 +40,7 @@ async function buildServiceWorker() {
       "process.env.NODE_ENV": JSON.stringify(
         isProd ? "production" : "development"
       ),
+      SW_EXTERNAL_DOMAINS: JSON.stringify(externalDomains),
     },
     treeShaking: true,
     logLevel: "info",

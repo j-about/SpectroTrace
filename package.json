@@ -1,6 +1,6 @@
 {
   "name": "spectrotrace",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "🎨🔊 Transform images into audio that reveals the original picture when viewed as a spectrogram. Free, offline-capable PWA with no account required.",
   "repository": {
     "type": "git",

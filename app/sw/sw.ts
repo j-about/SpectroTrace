@@ -47,6 +47,15 @@ import { CacheableResponsePlugin } from "workbox-cacheable-response";
 
 declare const self: ServiceWorkerGlobalScope;
 
+/**
+ * External domains injected at build time via esbuild define.
+ * These domains bypass caching and use NetworkOnly strategy.
+ *
+ * @see scripts/build-sw.mjs
+ * @see app/config/external-domains.mjs
+ */
+declare const SW_EXTERNAL_DOMAINS: string[];
+
 // =============================================================================
 // Cache Configuration
 // =============================================================================
@@ -211,15 +220,15 @@ registerRoute(
   new NetworkOnly(),
 );
 
-// External API calls (like Stripe for tips) - NetworkOnly
-registerRoute(
-  ({ url }) =>
-    !url.origin.includes(self.location.origin) &&
-    (url.origin.includes("stripe.com") ||
-      url.origin.includes("api.") ||
-      url.origin.includes("analytics")),
-  new NetworkOnly(),
-);
+// External domains - NetworkOnly (no caching)
+// Domains are injected at build time from environment configuration
+// Includes: GTM, Google Analytics, and any NEXT_PUBLIC_CSP_* domains
+registerRoute(({ url }) => {
+  // Only match external origins
+  if (url.origin === self.location.origin) return false;
+  // Check if hostname matches any configured external domain
+  return SW_EXTERNAL_DOMAINS.some((domain) => url.hostname.includes(domain));
+}, new NetworkOnly());
 
 // ============================================
 // Offline Fallback

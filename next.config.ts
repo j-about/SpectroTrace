@@ -12,6 +12,8 @@
 
 import type { NextConfig } from "next";
 
+import { GTM_BASE_DOMAINS } from "./app/config/external-domains.mjs";
+
 /**
  * Content Security Policy for SpectroTrace.
  *
@@ -147,27 +149,11 @@ const csp: CSPDirectives = {
  * @see https://developers.google.com/tag-platform/security/guides/csp
  */
 if (process.env.NEXT_PUBLIC_GTM_ID) {
-  csp["connect-src"].push(
-    "https://www.googletagmanager.com",
-    "https://www.google.com",
-  );
-  csp["font-src"].push("https://fonts.gstatic.com");
-  csp["img-src"].push(
-    "https://www.googletagmanager.com",
-    "https://googletagmanager.com",
-    "https://ssl.gstatic.com",
-    "https://www.gstatic.com",
-  );
-  csp["script-src"].push(
-    "https://www.googletagmanager.com",
-    "https://googletagmanager.com",
-    "https://tagmanager.google.com",
-  );
-  csp["style-src"].push(
-    "https://googletagmanager.com",
-    "https://tagmanager.google.com",
-    "https://fonts.googleapis.com",
-  );
+  csp["connect-src"].push(...GTM_BASE_DOMAINS.connect);
+  csp["font-src"].push(...GTM_BASE_DOMAINS.font);
+  csp["img-src"].push(...GTM_BASE_DOMAINS.img);
+  csp["script-src"].push(...GTM_BASE_DOMAINS.script);
+  csp["style-src"].push(...GTM_BASE_DOMAINS.style);
 
   // Extended sources from environment variables (only with GTM)
   extendCSP(csp, "connect-src", process.env.NEXT_PUBLIC_CSP_CONNECT_SRC);
