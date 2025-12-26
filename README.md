@@ -62,13 +62,28 @@ Copy `.env.example` to `.env.local` for local development:
 cp .env.example .env.local
 ```
 
-| Variable                 | Required | Default                 | Description                                                        |
-| ------------------------ | -------- | ----------------------- | ------------------------------------------------------------------ |
-| `NODE_ENV`               | No       | `development`           | Node environment (`development`, `production`, `test`)             |
-| `NEXT_PUBLIC_BASE_URL`   | No       | `http://localhost:3000` | Canonical base URL for SEO metadata, sitemaps, and OpenGraph tags  |
-| `NEXT_PUBLIC_GTM_ID`     | No       | (empty)                 | Google Tag Manager container ID (format: GTM-XXXXXXXX)             |
+| Variable               | Required | Default                 | Description                                                       |
+| ---------------------- | -------- | ----------------------- | ----------------------------------------------------------------- |
+| `NODE_ENV`             | No       | `development`           | Node environment (`development`, `production`, `test`)            |
+| `NEXT_PUBLIC_BASE_URL` | No       | `http://localhost:3000` | Canonical base URL for SEO metadata, sitemaps, and OpenGraph tags |
+| `NEXT_PUBLIC_GTM_ID`   | No       | (empty)                 | Google Tag Manager container ID (format: GTM-XXXXXXXX)            |
 
 For production deployment, set `NEXT_PUBLIC_BASE_URL` to your domain (e.g., `https://www.spectrotrace.org`).
+
+### Content Security Policy Extensions
+
+When `NEXT_PUBLIC_GTM_ID` is configured, additional CSP domains can be whitelisted via environment variables. These are useful for Google Analytics, Google Ads, or other third-party services added through GTM.
+
+| Variable                      | Description                                          |
+| ----------------------------- | ---------------------------------------------------- |
+| `NEXT_PUBLIC_CSP_CONNECT_SRC` | Additional connection sources (space-separated URLs) |
+| `NEXT_PUBLIC_CSP_FONT_SRC`    | Additional font sources (space-separated URLs)       |
+| `NEXT_PUBLIC_CSP_FRAME_SRC`   | Additional frame sources (space-separated URLs)      |
+| `NEXT_PUBLIC_CSP_IMG_SRC`     | Additional image sources (space-separated URLs)      |
+| `NEXT_PUBLIC_CSP_SCRIPT_SRC`  | Additional script sources (space-separated URLs)     |
+| `NEXT_PUBLIC_CSP_STYLE_SRC`   | Additional style sources (space-separated URLs)      |
+
+See [Google's CSP guide](https://developers.google.com/tag-platform/security/guides/csp) for required domains per service.
 
 ## Technical Architecture
 
@@ -224,21 +239,25 @@ The `dev` and `build` commands automatically rebuild the service worker. For man
 
 ### Security Headers
 
-| Header                    | Value                                          | Purpose                     |
-| ------------------------- | ---------------------------------------------- | --------------------------- |
-| Strict-Transport-Security | `max-age=31536000; includeSubDomains; preload` | Enforces HTTPS              |
-| Content-Security-Policy   | Restrictive CSP                                | Limits resource loading     |
-| X-Content-Type-Options    | `nosniff`                                      | Prevents MIME type sniffing |
-| X-Frame-Options           | `DENY`                                         | Prevents clickjacking       |
-| Referrer-Policy           | `strict-origin-when-cross-origin`              | Controls referrer info      |
-| Permissions-Policy        | `camera=(), geolocation=(), microphone=(self)` | Restricts browser features  |
+| Header                    | Value                                          | Purpose                       |
+| ------------------------- | ---------------------------------------------- | ----------------------------- |
+| Strict-Transport-Security | `max-age=31536000; includeSubDomains; preload` | Enforces HTTPS                |
+| Content-Security-Policy   | Restrictive CSP                                | Limits resource loading       |
+| X-Content-Type-Options    | `nosniff`                                      | Prevents MIME type sniffing   |
+| X-Frame-Options           | `DENY`                                         | Prevents clickjacking         |
+| Referrer-Policy           | `strict-origin-when-cross-origin`              | Controls referrer info        |
+| Permissions-Policy        | `camera=(), geolocation=(), microphone=(self)` | Restricts browser features    |
+| X-XSS-Protection          | `1; mode=block`                                | Enables browser XSS filtering |
+| X-DNS-Prefetch-Control    | `off`                                          | Disables DNS prefetching      |
 
 ### External Dependencies
 
-| Resource               | Domain                                              | Purpose                                   |
-| ---------------------- | --------------------------------------------------- | ----------------------------------------- |
-| Stripe (optional)      | `buy.stripe.com`                                    | Tipping (opens in new tab)                |
-| Google Tag Manager     | `*.googletagmanager.com`, `*.google-analytics.com`  | Analytics (optional, disabled by default) |
+| Resource           | Domain                     | Purpose                                   |
+| ------------------ | -------------------------- | ----------------------------------------- |
+| Stripe (optional)  | `buy.stripe.com`           | Tipping (opens in new tab)                |
+| Google Tag Manager | `www.googletagmanager.com` | Analytics (optional, disabled by default) |
+
+When GTM is enabled, only core GTM domains are whitelisted by default. Additional domains (Google Analytics, Google Ads, etc.) can be configured via `NEXT_PUBLIC_CSP_*` environment variables.
 
 ### Deployment Security
 
