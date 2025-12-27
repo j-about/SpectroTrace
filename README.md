@@ -162,6 +162,7 @@ Images exceeding the resolution limit are automatically downscaled during proces
 ```
 app/
 ├── page.tsx               # Main application page
+├── legal-notice/          # Legal Notice page (LCEN compliance)
 ├── layout.tsx             # Root layout with PWA integration
 ├── manifest.ts            # PWA manifest configuration
 ├── globals.css            # Tailwind CSS theme
@@ -171,7 +172,7 @@ app/
 │
 ├── components/
 │   ├── ui/                # shadcn/ui component library
-│   ├── layout/            # Header and Footer
+│   ├── layout/            # Header, Footer
 │   ├── ImageUpload/       # Image upload with cropper
 │   ├── AudioControls/     # Advanced parameter controls
 │   ├── Visualizer/        # Waveform and Spectrogram

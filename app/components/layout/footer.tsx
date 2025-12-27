@@ -1,11 +1,13 @@
 /**
  * @fileoverview Footer component for SpectroTrace application.
  *
- * Displays copyright information, license details, and external links
- * to GitHub repository and developer website.
+ * Displays copyright information, license details, Legal Notice link,
+ * and external links to GitHub repository and developer website.
+ *
  * @module components/layout/footer
  */
 
+import Link from "next/link";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { User } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,7 +25,8 @@ interface FooterProps {
  * Application footer with copyright and external links.
  *
  * Renders copyright notice with current year, MIT license reference,
- * and icon buttons linking to GitHub and developer's personal site.
+ * Legal Notice link, and icon buttons linking to GitHub and developer's
+ * personal site.
  */
 export function Footer({ className }: FooterProps) {
   const currentYear = new Date().getFullYear();
@@ -37,6 +40,13 @@ export function Footer({ className }: FooterProps) {
           <p>© {currentYear} SpectroTrace · Free & Open Source · MIT License</p>
           <p>Made with ❤️ by Jonathan About</p>
         </div>
+
+        <Link
+          href="/legal-notice"
+          className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+        >
+          Legal Notice
+        </Link>
 
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon-sm" asChild>

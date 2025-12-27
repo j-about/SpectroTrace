@@ -1,8 +1,10 @@
 /**
  * @fileoverview Header component for SpectroTrace application.
  *
- * Provides the main navigation header with mode toggle (Basic/Advanced),
- * branding, and tip button. Renders as a sticky header with backdrop blur.
+ * Provides the main navigation header with branding. Optionally includes
+ * mode toggle (Basic/Advanced) and tip button when props are provided.
+ * Renders as a sticky header with backdrop blur.
+ *
  * @module components/layout/header
  */
 
@@ -30,10 +32,10 @@ export type AppMode = "basic" | "advanced";
  * Props for the Header component.
  */
 interface HeaderProps {
-  /** Current application mode */
-  mode: AppMode;
+  /** Current application mode (optional for static pages) */
+  mode?: AppMode;
   /** Callback when user switches between Basic and Advanced modes */
-  onModeChange: (mode: AppMode) => void;
+  onModeChange?: (mode: AppMode) => void;
   /** Optional callback when tip button is clicked */
   onTipClick?: () => void;
   /** Optional additional CSS classes */
@@ -45,8 +47,11 @@ interface HeaderProps {
  *
  * Features:
  * - Sticky positioning with backdrop blur
- * - Tabs component for Basic/Advanced mode switching
- * - Tip button linking to donation flow
+ * - Tabs component for Basic/Advanced mode switching (when mode/onModeChange provided)
+ * - Tip button linking to donation flow (when onTipClick provided)
+ *
+ * On static pages (like Legal Notice), omit mode props for a simplified header
+ * showing only branding and navigation.
  */
 export function Header({
   mode,
@@ -72,31 +77,35 @@ export function Header({
         </div>
 
         <div className="flex items-center gap-4">
-          <Tabs
-            value={mode}
-            onValueChange={(value) => onModeChange(value as AppMode)}
-          >
-            <TabsList aria-label="Application mode">
-              <TabsTrigger value="basic">Basic</TabsTrigger>
-              <TabsTrigger value="advanced">Advanced</TabsTrigger>
-            </TabsList>
-          </Tabs>
+          {mode && onModeChange && (
+            <Tabs
+              value={mode}
+              onValueChange={(value) => onModeChange(value as AppMode)}
+            >
+              <TabsList aria-label="Application mode">
+                <TabsTrigger value="basic">Basic</TabsTrigger>
+                <TabsTrigger value="advanced">Advanced</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          )}
 
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="Buy me a beer"
-                onClick={onTipClick}
-              >
-                <Beer className="size-5" aria-hidden="true" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Buy me a beer</p>
-            </TooltipContent>
-          </Tooltip>
+          {onTipClick && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  aria-label="Buy me a beer"
+                  onClick={onTipClick}
+                >
+                  <Beer className="size-5" aria-hidden="true" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Buy me a beer</p>
+              </TooltipContent>
+            </Tooltip>
+          )}
         </div>
       </nav>
     </header>
