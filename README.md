@@ -162,7 +162,7 @@ Images exceeding the resolution limit are automatically downscaled during proces
 ```
 app/
 ├── page.tsx               # Main application page
-├── legal-notice/          # Legal Notice page (LCEN compliance)
+├── legal-notice/          # Legal Notice, Privacy Policy & Terms of Use
 ├── layout.tsx             # Root layout with PWA integration
 ├── manifest.ts            # PWA manifest configuration
 ├── globals.css            # Tailwind CSS theme
@@ -250,6 +250,14 @@ External domains that bypass service worker caching are configured via environme
 - **No user accounts**: No registration or login required
 - **Client-side processing**: All image and audio processing happens in your browser
 - **No data uploads**: Images and generated audio never leave your device
+
+### Legal Compliance
+
+- **Legal Notice**: French LCEN-compliant disclosures (website owner, hosting provider)
+- **Privacy Policy**: GDPR-compliant data processing information
+- **Terms of Use**: Service usage terms and conditions
+
+All legal information is accessible at `/legal-notice`.
 
 ### Security Headers
 
