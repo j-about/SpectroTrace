@@ -28,7 +28,7 @@
 
 - Image to audio spectrogram conversion via additive synthesis
 - Basic and Advanced modes for different use cases
-- Real-time waveform and spectrogram visualization
+- Real-time waveform and dual spectrogram visualization (full spectrum + selected range)
 - Offline-capable PWA with service worker caching
 - No accounts, no data uploads
 - Optional support via Stripe tipping
@@ -102,7 +102,7 @@ Additive Synthesis → PCM Generation → WAV Encoding → Blob
      ↓
 Main Thread ← Transferable ArrayBuffer ← WAV Result
      ↓
-Waveform Display + Spectrogram + Download
+Waveform Display + Dual Spectrograms + Download
 ```
 
 ### Web Worker Architecture

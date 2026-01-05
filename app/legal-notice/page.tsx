@@ -121,7 +121,7 @@ export default function LegalNoticePage() {
           <section className="mb-8">
             <h2 className="mb-4 text-lg font-semibold">Privacy Policy</h2>
 
-            <div className="space-y-6 text-left">
+            <div className="space-y-6">
               {/* Data Controller */}
               <div>
                 <h3 className="text-muted-foreground mb-2 text-sm font-medium">
@@ -190,7 +190,7 @@ export default function LegalNoticePage() {
           <section className="mb-8">
             <h2 className="mb-4 text-lg font-semibold">Terms of Use</h2>
 
-            <div className="space-y-6 text-left">
+            <div className="space-y-6">
               {/* Acceptance of Terms */}
               <div>
                 <h3 className="text-muted-foreground mb-2 text-sm font-medium">

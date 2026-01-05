@@ -412,7 +412,7 @@ export function Spectrogram({
       >
         <p className="text-muted-foreground text-sm font-medium">Spectrogram</p>
         <p className="text-muted-foreground/60 mt-2 text-xs">
-          Generate audio to see spectrogram
+          Generate audio to see full and zoomed spectrograms
         </p>
       </div>
     );
@@ -426,7 +426,7 @@ export function Spectrogram({
         className,
       )}
       role="region"
-      aria-label="Spectrogram visualization"
+      aria-label="Dual spectrogram visualization showing full spectrum and selected frequency range"
     >
       {/* Color map controls row */}
       <div className="flex items-center gap-3">
