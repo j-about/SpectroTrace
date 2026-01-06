@@ -18,6 +18,12 @@ import {
   GoogleTagManagerScript,
   GoogleTagManagerNoScript,
 } from "@/components/analytics/GoogleTagManager";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  getWebSiteSchema,
+  getOrganizationSchema,
+  getSoftwareApplicationSchema,
+} from "@/lib/seo/schemas";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -82,6 +88,9 @@ export default function RootLayout({
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <GoogleTagManagerScript />
+        <JsonLd data={getWebSiteSchema()} />
+        <JsonLd data={getOrganizationSchema()} />
+        <JsonLd data={getSoftwareApplicationSchema()} />
       </head>
       <body className="bg-background text-foreground min-h-screen antialiased">
         <GoogleTagManagerNoScript />

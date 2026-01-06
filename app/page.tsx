@@ -7,6 +7,7 @@
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { AlertCircle } from "lucide-react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
@@ -161,15 +162,48 @@ export default function Home() {
 
         <main id="main-content" className="flex-1" tabIndex={-1}>
           <div className="container mx-auto px-4 py-6">
+            {/* Hero Description - SEO Content */}
+            <section
+              aria-labelledby="hero-heading"
+              className="mb-8 text-center"
+            >
+              <h1 id="hero-heading" className="mb-4 text-2xl font-bold">
+                Transform Images Into Sound
+              </h1>
+              <p className="text-muted-foreground mx-auto mb-4 max-w-2xl">
+                SpectroTrace converts any image into audio using a fascinating
+                technique called additive synthesis. When you play the generated
+                sound through a spectrogram analyzer, the original image
+                magically reappears. It&apos;s free, works offline, and runs
+                entirely in your browser &mdash; no uploads, no accounts needed.
+              </p>
+              <p className="text-muted-foreground text-sm">
+                <Link
+                  href="/how-it-works"
+                  className="hover:text-primary underline underline-offset-4"
+                >
+                  Learn how it works
+                </Link>
+                ,{" "}
+                <Link
+                  href="/faq"
+                  className="hover:text-primary underline underline-offset-4"
+                >
+                  check the FAQ
+                </Link>
+                , or start by uploading an image below.
+              </p>
+            </section>
+
             <section
               aria-labelledby="upload-heading"
               className="flex flex-col gap-6"
             >
               {/* Upload and preview area */}
               <div className="flex flex-1 flex-col gap-4">
-                <h1 id="upload-heading" className="sr-only">
+                <h2 id="upload-heading" className="sr-only">
                   Image Upload
-                </h1>
+                </h2>
 
                 {imageData ? (
                   <div

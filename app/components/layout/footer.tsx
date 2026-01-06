@@ -41,12 +41,26 @@ export function Footer({ className }: FooterProps) {
           <p>Made with ❤️ by Jonathan About</p>
         </div>
 
-        <Link
-          href="/legal-notice"
-          className="text-muted-foreground hover:text-foreground text-sm transition-colors"
-        >
-          Legal Notice
-        </Link>
+        <nav aria-label="Footer navigation" className="flex items-center gap-4">
+          <Link
+            href="/how-it-works"
+            className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+          >
+            How It Works
+          </Link>
+          <Link
+            href="/faq"
+            className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+          >
+            FAQ
+          </Link>
+          <Link
+            href="/legal-notice"
+            className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+          >
+            Legal Notice
+          </Link>
+        </nav>
 
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon-sm" asChild>

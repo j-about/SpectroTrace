@@ -6,6 +6,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
+**[Try SpectroTrace Live](https://www.spectrotrace.org)** | [Documentation](#table-of-contents) | [Report Bug](https://github.com/j-about/SpectroTrace/issues)
+
 ## Table of Contents
 
 - [Features](#features)
@@ -31,7 +33,6 @@
 - Real-time waveform and dual spectrogram visualization (full spectrum + selected range)
 - Offline-capable PWA with service worker caching
 - No accounts, no data uploads
-- Optional support via Stripe tipping
 
 ## Requirements
 
@@ -162,9 +163,12 @@ Images exceeding the resolution limit are automatically downscaled during proces
 ```
 app/
 ├── page.tsx               # Main application page
+├── how-it-works/          # How It Works educational page
+├── faq/                   # FAQ page with accordion UI
 ├── legal-notice/          # Legal Notice, Privacy Policy & Terms of Use
-├── layout.tsx             # Root layout with PWA integration
+├── layout.tsx             # Root layout with PWA integration and JSON-LD
 ├── manifest.ts            # PWA manifest configuration
+├── sitemap.ts             # Dynamic sitemap generation
 ├── globals.css            # Tailwind CSS theme
 │
 ├── config/
@@ -173,6 +177,8 @@ app/
 ├── components/
 │   ├── ui/                # shadcn/ui component library
 │   ├── layout/            # Header, Footer
+│   ├── seo/               # JSON-LD structured data components
+│   ├── faq/               # FAQ accordion components
 │   ├── ImageUpload/       # Image upload with cropper
 │   ├── AudioControls/     # Advanced parameter controls
 │   ├── Visualizer/        # Waveform and Spectrogram
@@ -184,6 +190,7 @@ app/
 ├── lib/
 │   ├── audio/             # Audio generation and WAV encoding
 │   ├── image/             # Image processing utilities
+│   ├── seo/               # JSON-LD schema generators and FAQ data
 │   └── utils.ts           # Shared utilities
 │
 ├── hooks/                 # Custom React hooks
